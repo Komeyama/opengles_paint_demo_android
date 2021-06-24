@@ -1,0 +1,2 @@
+rootProject.name = "opengles_paint_demo_android"
+include ':app'
