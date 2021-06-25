@@ -8,7 +8,7 @@ class Line(
         +0.01f, -0.01f, 0.0f,
         +0.01f, +0.01f, 0.0f
     ),
-    override val initColor: FloatArray = floatArrayOf(1.0f, 1.0f, 1.0f, 1.0f)
+    override var initColor: FloatArray = floatArrayOf(0.0f, 0.0f, 0.0f, 1.0f)
 ) : ShaderBase() {
 
     override fun vertexShaderCode(): String {

@@ -8,7 +8,7 @@ import android.view.MotionEvent
 
 class MyGLSurface(context: Context, attrs: AttributeSet) : GLSurfaceView(context, attrs) {
 
-    private var renderer: MyGLRenderer = MyGLRenderer()
+    private var renderer: MyGLRenderer = MyGLRenderer(context)
 
     private var preTapPoint: PointF? = null
     private var tapPoint: PointF? = null
@@ -37,7 +37,7 @@ class MyGLSurface(context: Context, attrs: AttributeSet) : GLSurfaceView(context
                             (2 * it.x - displayWidth) / displayWidth,
                             (2 * it.y - displayHeight) / displayHeight
                         )
-                    }
+                    } as MutableList<PointF>
                     preTapPoint = tapPoint
                 }
             }
@@ -46,5 +46,13 @@ class MyGLSurface(context: Context, attrs: AttributeSet) : GLSurfaceView(context
             }
         }
         return true
+    }
+
+    fun clear() {
+        renderer.clear()
+    }
+
+    fun changeColor(rgb: FloatArray) {
+        renderer.changeColor(rgb)
     }
 }

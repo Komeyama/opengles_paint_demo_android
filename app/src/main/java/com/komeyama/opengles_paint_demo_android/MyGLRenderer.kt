@@ -1,13 +1,16 @@
 package com.komeyama.opengles_paint_demo_android
 
+import android.content.Context
+import android.graphics.BitmapFactory
 import android.graphics.PointF
 import android.opengl.GLES20
 import android.opengl.GLSurfaceView
+import android.opengl.GLUtils
 import android.opengl.Matrix
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
-class MyGLRenderer : GLSurfaceView.Renderer {
+class MyGLRenderer(private val context: Context) : GLSurfaceView.Renderer {
 
     private var vPMatrix = FloatArray(16)
     private val viewMatrix = FloatArray(16)
@@ -23,7 +26,7 @@ class MyGLRenderer : GLSurfaceView.Renderer {
 
     private var line: Line? = null
 
-    var points = listOf<PointF>()
+    var points = mutableListOf<PointF>()
 
     override fun onSurfaceCreated(p0: GL10?, p1: EGLConfig?) {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT)
@@ -34,10 +37,10 @@ class MyGLRenderer : GLSurfaceView.Renderer {
 
     override fun onSurfaceChanged(p0: GL10?, width: Int, height: Int) {
         GLES20.glViewport(0, 0, width, height)
-        homography(width, height)
+        homography()
 
         GLES20.glGenFramebuffers(1, frameBufferHandle, 0)
-        GLES20.glGenTextures(1, renderTextureHandle, 0)
+        renderTextureHandle[0] = loadTexture(context, R.drawable.background_texture)
         textured?.initTexture(width, height, renderTextureHandle[0])
     }
 
@@ -60,6 +63,16 @@ class MyGLRenderer : GLSurfaceView.Renderer {
 
         textured?.let { GLES20.glUseProgram(it.programHandle) }
         drawQuad()
+    }
+
+    fun clear() {
+        points.clear()
+        GLES20.glDeleteTextures(renderTextureHandle.size, renderTextureHandle, 0)
+        renderTextureHandle[0] = loadTexture(context, R.drawable.background_texture)
+    }
+
+    fun changeColor(rgb: FloatArray) {
+        line?.initColor = rgb
     }
 
     private fun drawQuad() {
@@ -103,9 +116,27 @@ class MyGLRenderer : GLSurfaceView.Renderer {
         Matrix.multiplyMM(vPMatrix, 0, projectionMatrix, 0, viewMatrix, 0)
     }
 
-    private fun homography(width: Int, height: Int) {
-        //val ratio: Float = width.toFloat() / height.toFloat()
+    private fun homography() {
         val ratio = 1.0f
         Matrix.frustumM(projectionMatrix, 0, -ratio, ratio, -1f, 1f, 3f, 7f)
+    }
+
+    private fun loadTexture(context: Context, resourceId: Int): Int {
+        val textureHandle = IntArray(1)
+        GLES20.glGenTextures(1, textureHandle, 0)
+        if (textureHandle[0] != 0) {
+            val options = BitmapFactory.Options()
+            options.inScaled = false
+            val bitmap = BitmapFactory.decodeResource(context.resources, resourceId, options)
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureHandle[0])
+            GLES20.glTexParameteri(
+                GLES20.GL_TEXTURE_2D,
+                GLES20.GL_TEXTURE_MIN_FILTER,
+                GLES20.GL_NEAREST
+            )
+            GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0)
+            bitmap.recycle()
+        }
+        return textureHandle[0]
     }
 }

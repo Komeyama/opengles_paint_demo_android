@@ -15,4 +15,73 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/clear_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:elevation="24dp"
+        android:stateListAnimator="@null"
+        android:text="@string/clear_button"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/change_black_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/black"
+        android:elevation="24dp"
+        android:stateListAnimator="@null"
+        android:text="@string/color_black"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/clear_button"
+        app:layout_constraintTop_toBottomOf="@id/clear_button" />
+
+    <Button
+        android:id="@+id/change_red_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/red"
+        android:elevation="24dp"
+        android:stateListAnimator="@null"
+        android:text="@string/color_red"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/change_black_button"
+        app:layout_constraintTop_toBottomOf="@id/change_black_button" />
+
+    <Button
+        android:id="@+id/change_green_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/green"
+        android:elevation="24dp"
+        android:stateListAnimator="@null"
+        android:text="@string/color_green"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/change_red_button"
+        app:layout_constraintTop_toBottomOf="@id/change_red_button" />
+
+    <Button
+        android:id="@+id/change_blue_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/blue"
+        android:elevation="24dp"
+        android:stateListAnimator="@null"
+        android:text="@string/color_blue"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/change_green_button"
+        app:layout_constraintTop_toBottomOf="@id/change_green_button" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

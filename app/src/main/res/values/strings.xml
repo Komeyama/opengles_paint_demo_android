@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">opengles_paint_demo_android</string>
+    <string name="clear_button">Clear</string>
+    <string name="color_black">Black</string>
+    <string name="color_red">Red</string>
+    <string name="color_green">Green</string>
+    <string name="color_blue">Blue</string>
 </resources>
